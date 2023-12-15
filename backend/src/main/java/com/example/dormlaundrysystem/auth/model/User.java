@@ -18,7 +18,7 @@ public class User {
 	private Long id;
 
 	@NotNull(message = "Username cannot be null")
-	@Size(min = 3, max = 20, message = "Invalid username")
+	@Pattern(regexp = "^[a-zA-Z0-9_\\-]{3,20}$", message = "Invalid username")
 	private String username;
 
 	@NotNull(message = "First name cannot be null")
@@ -30,7 +30,7 @@ public class User {
 	private String surname;
 
 	@NotNull(message = "Email cannot be null")
-	@Email(message = "Invalid email")
+	@Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Invalid email")
 	private String email;
 
 	@NotNull(message = "Password cannot be null")

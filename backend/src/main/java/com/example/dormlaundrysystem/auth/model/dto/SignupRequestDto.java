@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 
 public record SignupRequestDto(
         @NotNull(message = "Username cannot be empty")
-        @Size(min = 3, max = 20, message = "Username between 3 and 20 characters")
+        @Pattern(regexp = "^[a-zA-Z0-9_\\-]{3,20}$", message = "Invalid username")
         String username,
 
         @NotNull(message = "First name cannot be empty")
@@ -16,10 +16,10 @@ public record SignupRequestDto(
         String surname,
 
         @NotNull(message = "Email cannot be empty")
-        @Email(message = "Invalid email")
+        @Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Invalid email")
         String email,
 
         @NotNull(message = "Password cannot be empty")
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,32}$", message = "Invalid password")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,32}$", message = "Invalid password")
         String password
 ) {}
