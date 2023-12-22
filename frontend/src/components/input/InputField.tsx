@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from "react";
+import React, {ChangeEvent, FC} from 'react';
 
 interface InputFieldProps {
     id: string;
@@ -14,7 +14,7 @@ interface InputFieldProps {
     ref?: React.RefObject<HTMLInputElement>;
 }
 
-const InputField: FC<InputFieldProps> = ({
+export const InputField: FC<InputFieldProps> = ({
     id,
     value,
     onFocus,
@@ -45,5 +45,3 @@ const InputField: FC<InputFieldProps> = ({
         </>
     );
 };
-
-export default InputField;

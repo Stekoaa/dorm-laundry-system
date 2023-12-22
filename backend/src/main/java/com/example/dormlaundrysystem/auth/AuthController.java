@@ -8,7 +8,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/v1/auth")
 public class AuthController {
@@ -21,7 +20,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequest) {
         ResponseCookie jwtCookie = authService.authenticateUser(loginRequest);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(jwtCookie.getValue());
     }
 
     @PostMapping("/signup")

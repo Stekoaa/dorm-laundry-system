@@ -1,13 +1,7 @@
-import axios from "axios";
-import { SignupRequestDto } from "./SignupRequestDto";
+import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/laundry';
+const api = axios.create({
+    baseURL: 'http://localhost:8080/laundry/v1',
+});
 
-export async function submitSignup(params: SignupRequestDto): Promise<any> {
-    const result = await axios.post<SignupRequestDto>(BASE_URL + '/v1/auth/signup',
-        params,
-        {
-            headers: { 'Content-Type': 'application/json' }
-        })
-    return result;
-}
+export default api;

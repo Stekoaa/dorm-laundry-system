@@ -1,27 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useInputField = (initialValue: string, customValidation: any | undefined,
-                              matchingField: string | undefined = undefined, name="dupa") => {
+type ValidationFunction = (value: string) => boolean;
 
+export const useInputField = (
+    initialValue: string,
+    customValidation?: ValidationFunction,
+    matchingField?: string
+) => {
     const [value, setValue] = useState<typeof initialValue>(initialValue);
     const [valid, setValid] = useState<boolean>(false);
     const [focused, setFocus] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        console.log("custom validation: ", customValidation);
+        let isValid = true;
         if (customValidation) {
-            console.log(valid);
-            setValid(customValidation(value));
+            isValid = customValidation(value);
         }
         if (matchingField) {
-            setValid(value === matchingField);
+            isValid = isValid && value === matchingField;
         }
+        setValid(isValid);
     }, [value, matchingField]);
 
     const handleChange = (newValue: string) => {
         setValue(newValue);
-    }
+    };
 
     const handleFocus = () => {
         if (inputRef.current) {
@@ -39,5 +43,5 @@ export const useInputField = (initialValue: string, customValidation: any | unde
         setFocus,
         inputRef,
         handleFocus,
-    }
-}
+    };
+};
