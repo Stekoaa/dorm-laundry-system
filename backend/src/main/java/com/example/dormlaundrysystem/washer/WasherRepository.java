@@ -1,6 +1,6 @@
-package com.example.dormlaundrysystem.booking;
+package com.example.dormlaundrysystem.washer;
 
-import com.example.dormlaundrysystem.booking.model.Washer;
+import com.example.dormlaundrysystem.washer.model.Washer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

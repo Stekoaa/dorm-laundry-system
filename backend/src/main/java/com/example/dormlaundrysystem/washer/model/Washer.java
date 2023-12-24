@@ -1,5 +1,6 @@
-package com.example.dormlaundrysystem.booking.model;
+package com.example.dormlaundrysystem.washer.model;
 
+import com.example.dormlaundrysystem.booking.model.Reservation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 

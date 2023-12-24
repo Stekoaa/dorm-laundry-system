@@ -1,5 +1,7 @@
 package com.example.dormlaundrysystem.booking.model;
 
+import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.washer.model.Washer;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +10,10 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_username")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "washer_id")
@@ -25,6 +31,14 @@ public class Reservation {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Washer getWasher() {
