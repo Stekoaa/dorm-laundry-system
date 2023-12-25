@@ -10,9 +10,9 @@ import {
     RequireAuth,
     Unauthorized
 } from './components';
-import {ROLES} from './Roles';
+import { ROLES } from './Roles';
 
-function App() {
+const App = () => {
     return (
         <Routes>
             <Route path='/' element={ <Layout/> }>
@@ -24,15 +24,6 @@ function App() {
                     <Route path='/' element={ <Home/> }/>
                 </Route>
 
-                {/*<Route element={<RequireAuth allowedRoles={[ROLES.Editor]}/>}>*/}
-                {/*    <Route path='editor' element={<Editor/>}/>*/}
-                {/*</Route>*/}
-
-
-                {/*<Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>*/}
-                {/*    <Route path='admin' element={<Admin/>}/>*/}
-                {/*</Route>*/}
-
                 <Route element={<RequireAuth allowedRoles={[ROLES.USER]}/>}>
                     <Route path='lounge' element={ <Lounge/> }/>
                 </Route>
@@ -42,6 +33,6 @@ function App() {
             </Route>
         </Routes>
     );
-}
+};
 
 export default App;
