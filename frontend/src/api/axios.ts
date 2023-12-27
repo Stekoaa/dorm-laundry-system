@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: 'http://localhost:8080/laundry/v1',
+    headers: { 'Content-Type': 'application/json' },
 });
 
-export default api;
+export const apiWithCredentials = axios.create({
+    baseURL: 'http://localhost:8080/laundry/v1',
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+});

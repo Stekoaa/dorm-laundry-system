@@ -1,4 +1,4 @@
-import api from './axios';
+import { apiWithCredentials } from './axios';
 
 export interface WasherDto {
     id: number;
@@ -8,5 +8,5 @@ export interface WasherDto {
 }
 
 export async function getWashers() {
-    return await api.get<WasherDto[]>('/washers/all', { withCredentials: true });
+    return apiWithCredentials.get<WasherDto[]>('/washers/all');
 }

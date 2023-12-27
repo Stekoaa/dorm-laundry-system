@@ -1,4 +1,4 @@
-import api from './axios';
+import { api } from './axios';
 
 interface SignupRequestDto {
     username: string;
@@ -14,20 +14,9 @@ interface LoginRequestDto {
 }
 
 export async function submitSignup(params: SignupRequestDto) {
-    const response = await api.post<SignupRequestDto>('/auth/signup',
-        params,
-        {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        });
-    return response.data;
+    return api.post<SignupRequestDto>('/auth/signup', params);
 }
 
 export async function submitSignin(params: LoginRequestDto) {
-    return await api.post<string>('/auth/signin',
-        params,
-        {
-            headers: {'Content-Type': 'application/json'},
-            withCredentials: true
-        });
+    return api.post<string>('/auth/signin', params);
 }
