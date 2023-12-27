@@ -1,8 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import React, {useContext} from "react";
-import AuthContext from "../../context/AuthProvider";
-import { ROLES } from "../../Roles";
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context';
+import { ROLES } from '../../Roles';
 
 export const Navbar: React.FC = () => {
     const { user, logout } = useContext(AuthContext);
@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
     const handleLogoutClick = () => {
         logout();
         navigate('/login');
-    }
+    };
 
     const userLinks = [
       ['/', 'Home'],
@@ -34,11 +34,11 @@ export const Navbar: React.FC = () => {
 
     return (
         <>
-            <nav className="Nav">
-                <div className="NavMenu">
+            <nav className='Nav'>
+                <div className='NavMenu'>
                     {links.map(([link, linkText]) => createNavLink(link, linkText))}
                 </div>
-                <div className="NavBtn">
+                <div className='NavBtn'>
                     <button className='NavBtnLink' onClick={handleLogoutClick}> Log out</button>
                 </div>
             </nav>

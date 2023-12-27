@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 public class TimeSlotMapper {
     public static TimeSlotDto toDto(TimeSlot timeSlot){
         return new TimeSlotDto(
+                timeSlot.getId(),
                 timeSlot.getStartTime(),
-                timeSlot.getEndTime(),
-                timeSlot.isAvailable());
+                timeSlot.getEndTime()
+        );
     }
 }

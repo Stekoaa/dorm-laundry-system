@@ -13,10 +13,15 @@ interface LoginRequestDto {
     password: string;
 }
 
+interface LoginResponseDto {
+    token: string;
+}
+
+
 export async function submitSignup(params: SignupRequestDto) {
     return api.post<SignupRequestDto>('/auth/signup', params);
 }
 
 export async function submitSignin(params: LoginRequestDto) {
-    return api.post<string>('/auth/signin', params);
+    return api.post<LoginResponseDto>('/auth/signin', params);
 }

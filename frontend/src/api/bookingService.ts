@@ -1,4 +1,4 @@
-import { apiWithCredentials } from "./axios";
+import { apiWithCredentials } from './axios';
 
 interface TimeSlot {
     id: number;
@@ -15,8 +15,8 @@ export async function getWasherAvailability(washerId: number, startDate: Date, e
         {
             params: {
                 washerId: washerId,
-                startDate: startDate.toISOString().split("T")[0],
-                endDate: endDate.toISOString().split("T")[0]
+                startDate: startDate.toISOString().split('T')[0],
+                endDate: endDate.toISOString().split('T')[0]
             },
         },
     );

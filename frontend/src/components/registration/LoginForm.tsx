@@ -1,6 +1,6 @@
 import { InputField, useInputField } from '../input';
 import React, { FormEvent, useContext, useEffect, useRef, useState } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { AuthContext } from '../../context';
 import { submitSignin } from '../../api';
 import { AxiosError } from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -25,7 +25,8 @@ export const LoginForm: React.FC = () => {
                 username: username.value,
                 password: pwd.value,
             });
-            login(response.data);
+
+            login(response.data.token);
             username.setValue('');
             pwd.setValue('');
             navigate(from, { replace: true });
@@ -37,9 +38,10 @@ export const LoginForm: React.FC = () => {
                     setErrMsg('Missing username or password');
                 } else if (err.response?.status === 401) {
                     setErrMsg('Unauthorized');
-                } else {
-                    setErrMsg('Login failed');
                 }
+            } else {
+                setErrMsg('Login failed');
+                console.error(err);
             }
         }
     };

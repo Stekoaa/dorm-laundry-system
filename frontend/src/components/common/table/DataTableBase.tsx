@@ -1,4 +1,4 @@
-import DataTable, {TableProps, Alignment } from "react-data-table-component";
+import DataTable, {TableProps, Alignment } from 'react-data-table-component';
 
 const customStyles = {
     header: {
@@ -7,7 +7,7 @@ const customStyles = {
             textAlign: Alignment.LEFT,
         },
     },
-}
+};
 
 function DataTableBase<T>(props: TableProps<T>) {
     return (

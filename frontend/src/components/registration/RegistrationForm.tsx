@@ -49,9 +49,9 @@ export const RegistrationForm: React.FC = () => {
                     setErrMsg('No server response');
                 } else if (err.response?.status === 409) {
                     setErrMsg('Username or email in use');
-                } else {
-                    setErrMsg('Registration failed');
                 }
+            } else {
+                setErrMsg('Registration failed');
             }
         }
     };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import {IconButton, Menu } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -36,9 +36,9 @@ export const ButtonWithMenu: React.FC<ButtonWithMenuProps> = ({ menuItemsProps, 
     return (
         <div>
             <IconButton
-                id="demo-positioned-button"
+                id='demo-positioned-button'
                 aria-controls={anchorEl ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
+                aria-haspopup='true'
                 aria-expanded={anchorEl ? 'true' : undefined}
                 onClick={handleClick}
                 disabled={disabled}
@@ -46,8 +46,8 @@ export const ButtonWithMenu: React.FC<ButtonWithMenuProps> = ({ menuItemsProps, 
                 <MoreVertIcon />
             </IconButton>
             <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
+                id='demo-positioned-menu'
+                aria-labelledby='demo-positioned-button'
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}

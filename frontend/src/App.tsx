@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
-import {Home, LoginForm, RegistrationForm } from './components';
 import { Route, Routes } from 'react-router-dom';
 import {
-    //Home,
+    Home,
     Layout,
-    Lounge,
     PageNotFound,
     RequireAuth,
-    Unauthorized
+    Unauthorized,
+    LoginForm,
+    RegistrationForm,
+    ReservationWasherPanel,
+    BookingPanel
 } from './components';
 import { ROLES } from './Roles';
-import {ReservationWasherPanel} from "./components/washerPanel/ReservationWasherPanel";
-import {BookingPanel} from "./components/booking/BookingPanel";
 
 const App = () => {
     return (
@@ -27,12 +27,10 @@ const App = () => {
                 </Route>
 
                 <Route element={<RequireAuth allowedRoles={[ROLES.USER]}/>}>
-                    <Route path='lounge' element={ <Lounge/> }/>
                     <Route path='reservations' element={ <ReservationWasherPanel/> }/>
                     <Route path='book/*' element={ <BookingPanel/>}/>
                 </Route>
 
-                {/* catch all */}
                 <Route path='*' element={<PageNotFound/>}/>
             </Route>
         </Routes>

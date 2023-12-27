@@ -5,12 +5,15 @@ import com.example.dormlaundrysystem.auth.model.User;
 import com.example.dormlaundrysystem.booking.model.Reservation;
 import com.example.dormlaundrysystem.booking.model.TimeSlot;
 import com.example.dormlaundrysystem.booking.model.dto.ReservationDto;
+import com.example.dormlaundrysystem.booking.model.dto.TimeSlotDto;
 import com.example.dormlaundrysystem.booking.model.mapper.ReservationMapper;
+import com.example.dormlaundrysystem.booking.model.mapper.TimeSlotMapper;
 import com.example.dormlaundrysystem.washer.WasherRepository;
 import com.example.dormlaundrysystem.washer.model.Washer;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -51,15 +54,22 @@ public class ReservationService {
         timeSlotRepository.save(slot);
     }
 
-    public Map<LocalDate, List<TimeSlot>> getAvailableTimeSlotsForWasher(Long washerId, LocalDate startDate, LocalDate endDate) {
+    public Map<LocalDate, List<TimeSlotDto>> getAvailableTimeSlotsForWasher(Long washerId, LocalDate startDate, LocalDate endDate) {
         Washer washer = washerRepository.findById(washerId).orElseThrow();
-        List<TimeSlot> slotsInRange = timeSlotRepository.findByDayDateBetweenAndWasher(startDate, endDate, washer);
-
-        return slotsInRange.stream()
+        return timeSlotRepository
+                .findByDayDateBetweenAndWasher(startDate, endDate, washer)
+                .stream()
                 .filter(TimeSlot::isAvailable)
                 .collect(Collectors.groupingBy(
                         timeSlot -> timeSlot.getDay().getDate(),
                         Collectors.toList()
+                ))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream()
+                                .map(TimeSlotMapper::toDto)
+                                .collect(Collectors.toList())
                 ));
     }
 

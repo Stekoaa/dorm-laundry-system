@@ -1,6 +1,7 @@
 package com.example.dormlaundrysystem.auth;
 
 import com.example.dormlaundrysystem.auth.model.dto.LoginRequestDto;
+import com.example.dormlaundrysystem.auth.model.dto.LoginResponseDto;
 import com.example.dormlaundrysystem.auth.model.dto.SignupRequestDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +19,9 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequest) {
         ResponseCookie jwtCookie = authService.authenticateUser(loginRequest);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(jwtCookie.getValue());
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(new LoginResponseDto(jwtCookie.getValue()));
     }
 
     @PostMapping("/signup")

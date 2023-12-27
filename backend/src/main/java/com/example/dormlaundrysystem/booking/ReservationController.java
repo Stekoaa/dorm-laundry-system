@@ -49,7 +49,7 @@ public class ReservationController {
     }
 
     @GetMapping("/availableTimeSlots")
-    public Map<LocalDate, List<TimeSlot>> getAvailableTimeSlots(
+    public Map<LocalDate, List<TimeSlotDto>> getAvailableTimeSlots(
             @RequestParam Long washerId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

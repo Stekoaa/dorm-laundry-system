@@ -1,7 +1,7 @@
-import { TableColumn } from "react-data-table-component";
-import { ButtonWithMenu } from "../common/ButtonWithMenu";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { TableColumn } from 'react-data-table-component';
+import { ButtonWithMenu } from '../common/ButtonWithMenu';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface DataRow {
     id: number;
@@ -12,11 +12,8 @@ interface DataRow {
 
 export const useReservationWasherPanel = () => {
     const navigate = useNavigate();
-
-    const handleReservationButtonClick = (id: number) => {
-        navigate(`/book/washer?id=${id}`);
-    };
-
+    const handleReservationButtonClick = (id: number) => navigate(`/book/washer?id=${id}`);
+    
     const generateMenuItemsProps = (id: number) => ({
         onClick: () => handleReservationButtonClick(id), // Pass the ID to the handler
         text: 'Book',
@@ -30,7 +27,7 @@ export const useReservationWasherPanel = () => {
         {
             name: 'Available',
             selector: row => row.isAvailable,
-            format: row => row.isAvailable ? "yes" : "no"
+            format: row => row.isAvailable ? 'Yes' : 'No'
         },
         {
             name: 'Level',
@@ -39,11 +36,10 @@ export const useReservationWasherPanel = () => {
         {
             cell: (row) =>
                 <ButtonWithMenu
-                menuItemsProps={[generateMenuItemsProps(row.id)]}
-                disabled={!row.isAvailable}
+                    menuItemsProps={[generateMenuItemsProps(row.id)]}
+                    disabled={!row.isAvailable}
                 />,
             button: true,
-            grow: 2
         }
     ];
 
@@ -51,7 +47,7 @@ export const useReservationWasherPanel = () => {
         {
             when: (row: DataRow) => !row.isAvailable,
             style: {
-                backgroundColor: '#f2f2f2', // Change background color for unavailable rows
+                backgroundColor: '#f2f2f2',
                 color: '#888'
             },
         },

@@ -1,20 +1,17 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from "../../context";
 
 export const Home: React.FC = () => {
+    const { user } = useContext(AuthContext);
+
     return (
         <section>
-            <h1>Home</h1>
-            <br />
-            <p>You are logged in!</p>
+            <h1>Hello {user?.firstName}!</h1>
             <br />
             <Link to='/editor'>Go to the Editor page</Link>
             <br />
             <Link to='/admin'>Go to the Admin page</Link>
-            <br />
-            <Link to='/lounge'>Go to the Lounge</Link>
-            <br />
-            <Link to='/linkpage'>Go to the link page</Link>
         </section>
     );
 };
