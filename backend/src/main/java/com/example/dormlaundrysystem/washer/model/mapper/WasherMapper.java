@@ -10,9 +10,8 @@ public class WasherMapper {
         return new WasherDto(
                 washer.getId(),
                 washer.getName(),
-                washer.isBooked(),
-                washer.isAvailable(),
-                washer.isDamaged()
+                washer.getLevel(),
+                washer.isAvailable()
         );
     }
 }

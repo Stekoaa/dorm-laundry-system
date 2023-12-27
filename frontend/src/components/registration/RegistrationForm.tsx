@@ -88,7 +88,7 @@ export const RegistrationForm: React.FC = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href='#'>Sign In</a>
+                        <Link to='/login'> Sign in </Link>
                     </p>
                 </section>
             ) : (

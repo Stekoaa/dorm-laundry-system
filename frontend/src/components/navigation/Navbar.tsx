@@ -1,23 +1,27 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import './Navbar.css';
 import React, {useContext} from "react";
 import AuthContext from "../../context/AuthProvider";
-import {ROLES} from "../../Roles";
+import { ROLES } from "../../Roles";
 
 export const Navbar: React.FC = () => {
-    const { user } = useContext(AuthContext);
-    const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);
+    const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogoutClick = () => {
+        logout();
+        navigate('/login');
+    }
 
     const userLinks = [
-      ['/home', 'Home'],
+      ['/', 'Home'],
       ['/reservations', 'Reservations']
     ];
-
     const adminLinks = [
         ['/dupa', 'Dupa'],
-        ['/reservations', 'Reservations']
+        ['/reservations', 'My Reservations']
     ];
-
+    const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);
     const links = isAdmin ? adminLinks : userLinks;
 
     const createNavLink = (link: string, linkText: string, className: string = 'NavLink') => {
@@ -35,7 +39,7 @@ export const Navbar: React.FC = () => {
                     {links.map(([link, linkText]) => createNavLink(link, linkText))}
                 </div>
                 <div className="NavBtn">
-                    {createNavLink('/logout', 'Log out', 'NavBtnLink')}
+                    <button className='NavBtnLink' onClick={handleLogoutClick}> Log out</button>
                 </div>
             </nav>
         </>

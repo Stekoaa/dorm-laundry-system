@@ -1,6 +1,5 @@
 package com.example.dormlaundrysystem.washer;
 
-import com.example.dormlaundrysystem.washer.model.Washer;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +20,7 @@ public class WasherController {
     public List<WasherDto> getAllWashers() {
         return washerService.getAllWashers();
     }
+
+    // TODO: Update status, adding new machine, permissions handling
 
 }

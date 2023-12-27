@@ -1,16 +1,7 @@
-import { useNavigate, Link } from 'react-router-dom';
-import React, { useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { Link } from 'react-router-dom';
+import React from 'react';
 
 export const Home: React.FC = () => {
-    const { logout } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout();
-        navigate('/linkpage');
-    };
-
     return (
         <section>
             <h1>Home</h1>
@@ -24,9 +15,6 @@ export const Home: React.FC = () => {
             <Link to='/lounge'>Go to the Lounge</Link>
             <br />
             <Link to='/linkpage'>Go to the link page</Link>
-            <div className='flexGrow'>
-                <button onClick={handleLogout}>Sign Out</button>
-            </div>
         </section>
     );
 };

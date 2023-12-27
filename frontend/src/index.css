@@ -10,6 +10,7 @@ html {
   font-family: 'Nunito', sans-serif;
   font-size: 18px;
   color: #fff;
+  height: 100%;
 }
 
 body {
@@ -20,9 +21,8 @@ body {
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 section {
@@ -100,13 +100,19 @@ button {
   margin-left: 0.25rem;
 }
 
-.errmsg {
+.errmsg, .successMessage {
   background-color: lightpink;
   color: firebrick;
   font-weight: bold;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
+.successMessage {
+  background-color: lightgreen;
+  color: green;
+}
+
 
 .line {
   display: inline-block;

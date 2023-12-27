@@ -1,5 +1,7 @@
 package com.example.dormlaundrysystem.booking.model.dto;
 
-import java.time.LocalDateTime;
-
-public record TimeSlotDto(LocalDateTime startTime, LocalDateTime endTime) {}
+public record TimeSlotDto(
+        String startTime,
+        String endTime,
+        boolean available
+) {}

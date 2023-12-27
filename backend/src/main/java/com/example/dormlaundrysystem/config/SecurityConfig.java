@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/v1/auth/**").permitAll()
                                 .requestMatchers("/v1/test/**").permitAll()
+                                .requestMatchers("/v1/bookings/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class)

@@ -18,9 +18,8 @@ public class Washer {
 
     @NotBlank
     private String name;
-    private boolean isBooked;
+    private int level;
     private boolean isAvailable;
-    private boolean isDamaged;
 
     @Version
     private Long version;
@@ -30,11 +29,10 @@ public class Washer {
 
     public Washer() {}
 
-    public Washer(String name, boolean isBooked, boolean isAvailable, boolean isDamaged) {
+    public Washer(String name, int level, boolean isAvailable) {
         this.name = name;
-        this.isBooked = isBooked;
+        this.level = level;
         this.isAvailable = isAvailable;
-        this.isDamaged = isDamaged;
     }
 
     public Long getId() {
@@ -53,12 +51,12 @@ public class Washer {
         this.name = name;
     }
 
-    public boolean isBooked() {
-        return isBooked;
+    public int getLevel() {
+        return level;
     }
 
-    public void setBooked(boolean booked) {
-        isBooked = booked;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public boolean isAvailable() {
@@ -67,14 +65,6 @@ public class Washer {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
-    }
-
-    public boolean isDamaged() {
-        return isDamaged;
-    }
-
-    public void setDamaged(boolean damaged) {
-        isDamaged = damaged;
     }
 
     public Long getVersion() {

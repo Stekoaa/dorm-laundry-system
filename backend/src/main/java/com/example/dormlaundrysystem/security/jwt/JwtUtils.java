@@ -1,10 +1,7 @@
 package com.example.dormlaundrysystem.security.jwt;
 
 import com.example.dormlaundrysystem.security.UserDetailsImpl;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +14,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -44,11 +42,12 @@ public class JwtUtils {
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateToken(userPrincipal);
-        return ResponseCookie.from(jwtCookie, jwt).path("/v1").maxAge(24 * 60 * 60).httpOnly(false).build();
+        return ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60).httpOnly(true).build();
     }
 
     public String getUsernameFromJwtToken(String token) {
-        return Jwts.parser().verifyWith(key()).build().parseSignedClaims(token).getPayload().getSubject();
+        Claims claims = Jwts.parser().verifyWith(key()).build().parseSignedClaims(token).getPayload();
+        return claims.getSubject();
     }
 
     private SecretKey key() {
