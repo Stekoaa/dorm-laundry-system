@@ -21,4 +21,12 @@ public class AuthAdvice extends ResponseEntityExceptionHandler {
         body.put("message", ex.getMessage());
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Not found");
+        body.put("message", "User not found");
+        return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }

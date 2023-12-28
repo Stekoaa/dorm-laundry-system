@@ -5,22 +5,25 @@ import { AuthContext } from '../../context';
 import { ROLES } from '../../Roles';
 
 export const Navbar: React.FC = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user, handleLogout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogoutClick = () => {
-        logout();
+        handleLogout();
         navigate('/login');
     };
 
     const userLinks = [
-      ['/', 'Home'],
-      ['/reservations', 'Reservations']
+        ['/', 'Home'],
+        ['/reservations', 'Reservations'],
+        ['/myReservations', 'My reservations']
     ];
     const adminLinks = [
         ['/dupa', 'Dupa'],
-        ['/reservations', 'My Reservations']
+        ['/reservations', 'Reservations'],
+        ['/myReservations', 'Reservations']
     ];
+    
     const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);
     const links = isAdmin ? adminLinks : userLinks;
 

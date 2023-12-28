@@ -1,9 +1,8 @@
 .Nav {
     background: #000;
-    height: 20%;
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem calc((100vw - 1000px) / 2);
+    padding: 0.5rem;
     z-index: 10;
     align-self: flex-start;
     width: 100%;

@@ -29,4 +29,10 @@ public class AuthController {
         authService.createUser(signupRequest);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout() {
+        ResponseCookie jwtCookie = authService.logoutUser();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("");
+    }
 }

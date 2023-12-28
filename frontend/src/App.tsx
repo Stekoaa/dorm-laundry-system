@@ -9,10 +9,11 @@ import {
     Unauthorized,
     LoginForm,
     RegistrationForm,
-    ReservationWasherPanel,
+    WashersPanel,
     BookingPanel
 } from './components';
 import { ROLES } from './Roles';
+import {ReservationsPanel} from "./components/washerPanel/booking/ReservationsPanel";
 
 const App = () => {
     return (
@@ -26,8 +27,9 @@ const App = () => {
                     <Route path='/' element={ <Home/> }/>
                 </Route>
 
-                <Route element={<RequireAuth allowedRoles={[ROLES.USER]}/>}>
-                    <Route path='reservations' element={ <ReservationWasherPanel/> }/>
+                <Route element={<RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]}/>}>
+                    <Route path='reservations' element={ <WashersPanel/> }/>
+                    <Route path='myReservations' element={<ReservationsPanel/>}/>
                     <Route path='book/*' element={ <BookingPanel/>}/>
                 </Route>
 

@@ -1,2 +1,2 @@
-export { ReservationWasherPanel } from './ReservationWasherPanel';
+export { WashersPanel } from './WashersPanel';
 export { BookingPanel } from './booking/BookingPanel';

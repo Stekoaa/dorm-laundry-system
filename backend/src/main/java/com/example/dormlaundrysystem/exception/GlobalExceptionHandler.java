@@ -2,6 +2,8 @@ package com.example.dormlaundrysystem.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,5 +30,13 @@ public class GlobalExceptionHandler {
         body.put("error", "Invalid request");
         body.put("message", errors);
         return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler({OptimisticLockingFailureException.class})
+    protected ResponseEntity<Object> handleOptimisticLockException(OptimisticLockingFailureException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Entity was overridden by another user");
+        body.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 }

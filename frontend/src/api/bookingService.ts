@@ -1,13 +1,23 @@
 import { apiWithCredentials } from './axios';
+import { UserDto } from "./authService";
+import {WasherDto} from "./washersService";
 
-interface TimeSlot {
+interface TimeSlotDto {
     id: number;
     startTime: string;
     endTime: string;
+    date: string;
 }
 
 export interface SlotsByDay {
-    [date: string]: TimeSlot[];
+    [date: string]: TimeSlotDto[];
+}
+
+export interface ReservationDto {
+    id: number
+    userDto: UserDto;
+    timeSlotDto: TimeSlotDto;
+    washerDto: WasherDto;
 }
 
 export async function getWasherAvailability(washerId: number, startDate: Date, endDate: Date) {
@@ -31,4 +41,12 @@ export async function makeReservation(washerId: number, timeSlotId: number) {
                 slotId: timeSlotId
             },
         });
+}
+
+export async function getAllReservations() {
+    return await apiWithCredentials.get<ReservationDto[]>('/bookings/all');
+}
+
+export async function getUserReservation() {
+    return await apiWithCredentials.get<ReservationDto[]>('/bookings/myReservations');
 }

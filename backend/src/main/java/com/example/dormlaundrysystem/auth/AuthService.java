@@ -67,4 +67,8 @@ public class AuthService {
 
         userRepository.save(user);
     }
+
+    public ResponseCookie logoutUser() {
+        return jwtUtils.generateLogoutJwtCookie();
+    }
 }

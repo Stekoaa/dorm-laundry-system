@@ -10,14 +10,16 @@ interface DataRow {
     isAvailable: boolean;
 }
 
-export const useReservationWasherPanel = () => {
+export const useWashersPanel = () => {
     const navigate = useNavigate();
     const handleReservationButtonClick = (id: number) => navigate(`/book/washer?id=${id}`);
     
-    const generateMenuItemsProps = (id: number) => ({
-        onClick: () => handleReservationButtonClick(id), // Pass the ID to the handler
-        text: 'Book',
-    });
+    const menuItemsProps = (id: number) => ([
+        {
+            onClick: () => handleReservationButtonClick(id),
+            text: 'Book',
+        }
+        ]);
 
     const columns: TableColumn<DataRow>[] = [
         {
@@ -36,7 +38,7 @@ export const useReservationWasherPanel = () => {
         {
             cell: (row) =>
                 <ButtonWithMenu
-                    menuItemsProps={[generateMenuItemsProps(row.id)]}
+                    menuItemsProps={menuItemsProps(row.id)}
                     disabled={!row.isAvailable}
                 />,
             button: true,

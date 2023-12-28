@@ -42,7 +42,11 @@ public class JwtUtils {
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateToken(userPrincipal);
-        return ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60).httpOnly(true).build();
+        return ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(60 * 60).httpOnly(true).build();
+    }
+
+    public ResponseCookie generateLogoutJwtCookie() {
+        return ResponseCookie.from(jwtCookie, "").path("/").maxAge(0).httpOnly(true).build();
     }
 
     public String getUsernameFromJwtToken(String token) {

@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    List<Reservation> findByWasherId(Long washerId);
     List<Reservation> findByUserFirstNameAndUserSurname(String firstName, String surname);
+    List<Reservation> findByUserUsername(String username);
 }

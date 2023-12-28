@@ -1,5 +1,6 @@
 import React, { useState, createContext, PropsWithChildren, useContext } from 'react';
 import * as jose from 'jose';
+import { logout } from "../api";
 
 export interface Role {
     authority: string;
@@ -12,16 +13,16 @@ interface User {
     roles: Role[];
 }
 
-interface AuthContextType {
+export interface AuthContextType {
     user: User | null;
-    login: (token: string) => void;
-    logout: () => void;
+    handleLogin: (token: string) => void;
+    handleLogout: () => void;
 }
 
 const initialAuthContext: AuthContextType = {
     user: null,
-    login: () => {},
-    logout: () => {}
+    handleLogin: () => {},
+    handleLogout: () => {}
 };
 
 export const useAuth = () => {
@@ -33,7 +34,7 @@ export const AuthContext = createContext<AuthContextType>(initialAuthContext);
 export const AuthProvider = ({ children }: PropsWithChildren) => {
     const [user, setUser] = useState<User | null>(null);
 
-    const login = (token: string) => {
+    const handleLogin = (token: string) => {
         try {
             const decodedToken = jose.decodeJwt(token);
             if (decodedToken) {
@@ -52,12 +53,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    const logout = () => {
+    const handleLogout = async () => {
+        await logout();
         setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
             { children }
         </AuthContext.Provider>
     );

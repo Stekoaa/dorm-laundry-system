@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthFormLabel } from './AuthFormLabel';
 
 export const LoginForm: React.FC = () => {
-    const { login } = useContext(AuthContext);
+    const { handleLogin } = useContext(AuthContext);
     const username = useInputField('');
     const pwd = useInputField('');
     const [errMsg, setErrMsg] = useState<string>('');
@@ -25,8 +25,8 @@ export const LoginForm: React.FC = () => {
                 username: username.value,
                 password: pwd.value,
             });
-
-            login(response.data.token);
+            console.log(response.data.token);
+            handleLogin(response.data.token);
             username.setValue('');
             pwd.setValue('');
             navigate(from, { replace: true });

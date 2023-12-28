@@ -10,7 +10,8 @@ public class TimeSlotMapper {
         return new TimeSlotDto(
                 timeSlot.getId(),
                 timeSlot.getStartTime(),
-                timeSlot.getEndTime()
+                timeSlot.getEndTime(),
+                timeSlot.getDay().getDate()
         );
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class ReservationMapper {
     public static ReservationDto toDto(Reservation reservation) {
         return new ReservationDto(
+                reservation.getId(),
                 UserMapper.toDto(reservation.getUser()),
                 WasherMapper.toDto(reservation.getWasher()),
                 TimeSlotMapper.toDto(reservation.getTimeSlot())
