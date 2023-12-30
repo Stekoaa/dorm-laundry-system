@@ -23,14 +23,19 @@ const App = () => {
                 <Route path='register' element={ <RegistrationForm/> }/>
                 <Route path='unauthorized' element={ <Unauthorized/> }/>
 
-                <Route element={<RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]}/>}>
-                    <Route path='/' element={ <Home/> }/>
+                <Route element={<RequireAuth allowedRoles={[ROLES.USER]}/>}>
+                    <Route path='book/*' element={ <BookingPanel/>}/>
+                    <Route path='myReservations' element={<ReservationsPanel/>}/>
+                </Route>
+
+                <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]}/>}>
+                    <Route path='reservations' element={<ReservationsPanel/>}/>
                 </Route>
 
                 <Route element={<RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]}/>}>
-                    <Route path='reservations' element={ <WashersPanel/> }/>
+                    <Route path='/' element={ <Home/> }/>
+                    <Route path='washers' element={ <WashersPanel/> }/>
                     <Route path='myReservations' element={<ReservationsPanel/>}/>
-                    <Route path='book/*' element={ <BookingPanel/>}/>
                 </Route>
 
                 <Route path='*' element={<PageNotFound/>}/>

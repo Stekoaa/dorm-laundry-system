@@ -18,8 +18,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ filterText, pl
                 aria-label="Search Input"
                 value={filterText}
                 onChange={onFilter}
+                className="filterInput"
             />
-            <button type='button' onClick={onClear}>
+            <button type='button' onClick={onClear} className='filterButton'>
                 X
             </button>
         </>

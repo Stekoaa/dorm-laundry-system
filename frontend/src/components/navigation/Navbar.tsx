@@ -13,15 +13,16 @@ export const Navbar: React.FC = () => {
         navigate('/login');
     };
 
+    const handleBookClick = () => navigate('/washers');
+
     const userLinks = [
         ['/', 'Home'],
-        ['/reservations', 'Reservations'],
-        ['/myReservations', 'My reservations']
+        ['/myReservations', 'My Reservations']
     ];
     const adminLinks = [
-        ['/dupa', 'Dupa'],
-        ['/reservations', 'Reservations'],
-        ['/myReservations', 'Reservations']
+        ['/', 'Home'],
+        ['/washers', 'Washers Panel'],
+        ['/reservations', 'Reservations']
     ];
     
     const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);
@@ -40,9 +41,15 @@ export const Navbar: React.FC = () => {
             <nav className='Nav'>
                 <div className='NavMenu'>
                     {links.map(([link, linkText]) => createNavLink(link, linkText))}
+                    {!isAdmin && (
+                        <div className='NavBtnBook'>
+                            <button className='NavBtnLink' onClick={handleBookClick}>Book washer</button>
+                        </div>
+                    )
+                    }
                 </div>
-                <div className='NavBtn'>
-                    <button className='NavBtnLink' onClick={handleLogoutClick}> Log out</button>
+                <div className='NavBtnLogout'>
+                    <button className='NavBtnLink' onClick={handleLogoutClick}>Log out</button>
                 </div>
             </nav>
         </>

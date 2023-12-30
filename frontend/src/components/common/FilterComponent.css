@@ -1,4 +1,4 @@
-#search {
+.filterInput {
     height: 32px;
     width: 200px;
     border-radius: 5px 0 0 5px;
@@ -9,7 +9,7 @@
     }
 }
 
-button {
+.filterButton {
     border-radius: 0 5px 5px 0;
     height: 34px;
     width: 32px;
@@ -17,4 +17,5 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 0;
 }

@@ -1,11 +1,11 @@
 import { TableColumn } from 'react-data-table-component';
 import { ButtonWithMenu } from '../../common/ButtonWithMenu';
-import React from 'react';
-import { getAllReservations, getUserReservation, ReservationDto } from '../../../api/bookingService';
+import React, {useState} from 'react';
+import {deleteReservation, getAllReservations, getUserReservation, ReservationDto} from '../../../api/bookingService';
 import { FilterComponent } from '../../common/FilterComponent';
 
 export interface ReservationRow {
-    reservationId: number;
+    id: number;
     washer: string;
     date: string;
     startTime: string;
@@ -23,6 +23,8 @@ const dateSortFunction = (rowA: ReservationRow, rowB: ReservationRow) => {
 };
 
 export const useReservationsPanel = (isAdmin: boolean) => {
+    const [idDeleted, setIdDeleted] = useState<number>();
+
     const menuItemsProps = (id: number) => [
         {
             onClick: () => handleDeleteButtonClick(id),
@@ -30,8 +32,17 @@ export const useReservationsPanel = (isAdmin: boolean) => {
         },
     ];
 
-    const handleDeleteButtonClick = (id: number) => {
-        console.log(id);
+    const handleDeleteButtonClick = async(id: number) => {
+        await deleteReservation(id);
+        setIdDeleted(id);
+    };
+
+    const cancelButtonDisabled = (date: string, endTime: string) => {
+        const dateTimeString = `${date}T${endTime}`;
+        const combinedDateTime = new Date(dateTimeString);
+        const currentDateTime = new Date();
+
+        return combinedDateTime < currentDateTime;
     };
 
     const commonColumns: TableColumn<ReservationRow>[] = [
@@ -55,9 +66,12 @@ export const useReservationsPanel = (isAdmin: boolean) => {
         ...commonColumns,
         {
             cell: (row) => (
-                <ButtonWithMenu menuItemsProps={menuItemsProps(row.reservationId)} disabled={false} />
+                <ButtonWithMenu
+                    menuItemsProps={menuItemsProps(row.id)}
+                    disabled={cancelButtonDisabled(row.date, row.endTime)}
+                />
             ),
-            button: true,
+            button: true
         },
     ];
 
@@ -71,7 +85,7 @@ export const useReservationsPanel = (isAdmin: boolean) => {
 
     const dataConverter = (items: ReservationDto[]) => {
         return items.map((item) => ({
-            reservationId: item.id,
+            id: item.id,
             washer: item.washerDto.name,
             date: item.timeSlotDto.date,
             startTime: item.timeSlotDto.startTime,
@@ -82,8 +96,8 @@ export const useReservationsPanel = (isAdmin: boolean) => {
         }));
     };
 
-    const [filterText, setFilterText] = React.useState('');
-    const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+    const [filterText, setFilterText] = useState<string>('');
+    const [resetPaginationToggle, setResetPaginationToggle] = useState<boolean>(false);
 
     const handleClear = () => {
         if (filterText) {
@@ -97,6 +111,7 @@ export const useReservationsPanel = (isAdmin: boolean) => {
             onFilter={(e) => setFilterText(e.target.value)}
             onClear={handleClear}
             filterText={filterText}
+            placeholder='Search by name'
         />
     );
 
@@ -114,5 +129,5 @@ export const useReservationsPanel = (isAdmin: boolean) => {
     const filterFun = isAdmin ? filterFunction : undefined;
     const filterComponent = isAdmin ? subHeaderComponentMemo : undefined;
 
-    return { columns, fetchFunction, dataConverter, filterFun, filterComponent };
+    return { columns, fetchFunction, dataConverter, filterFun, filterComponent, idDeleted };
 };

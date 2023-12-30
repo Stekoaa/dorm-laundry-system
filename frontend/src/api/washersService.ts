@@ -10,3 +10,8 @@ export interface WasherDto {
 export async function getWashers() {
     return apiWithCredentials.get<WasherDto[]>('/washers/all');
 }
+
+export async function updateWasher(id: number, updatedWasher: WasherDto) {
+    console.log("dupa", updatedWasher);
+    return apiWithCredentials.put(`/washers/${id}`, updatedWasher);
+}

@@ -36,7 +36,7 @@
     color: #15cdfc;
 }
 
-.NavBtn {
+.NavBtnLogout, .NavBtnBook {
     display: flex;
     align-items: center;
     margin-right: 24px;
@@ -44,6 +44,9 @@
     /* Third Nav */
     /* justify-content: flex-end;
     width: 100vw; */
+}
+.NavBtnBook {
+    margin-right: 200px;
 }
 
 .NavBtnLink {

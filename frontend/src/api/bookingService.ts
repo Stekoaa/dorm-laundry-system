@@ -33,7 +33,7 @@ export async function getWasherAvailability(washerId: number, startDate: Date, e
 }
 
 export async function makeReservation(washerId: number, timeSlotId: number) {
-    return await apiWithCredentials.post('/bookings/book',
+    return apiWithCredentials.post('/bookings/book',
         {},
         {
             params: {
@@ -44,9 +44,13 @@ export async function makeReservation(washerId: number, timeSlotId: number) {
 }
 
 export async function getAllReservations() {
-    return await apiWithCredentials.get<ReservationDto[]>('/bookings/all');
+    return apiWithCredentials.get<ReservationDto[]>('/bookings/all');
 }
 
 export async function getUserReservation() {
-    return await apiWithCredentials.get<ReservationDto[]>('/bookings/myReservations');
+    return apiWithCredentials.get<ReservationDto[]>('/bookings/myReservations');
+}
+
+export async function deleteReservation(reservationId: number) {
+    return apiWithCredentials.delete(`/bookings/${reservationId}`);
 }

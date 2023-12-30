@@ -1,7 +1,10 @@
 import { TableColumn } from 'react-data-table-component';
 import { ButtonWithMenu } from '../common/ButtonWithMenu';
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext, AuthContextType} from "../../context";
+import {ROLES} from "../../Roles";
+import {updateWasher} from "../../api/washersService";
 
 interface DataRow {
     id: number;
@@ -11,15 +14,38 @@ interface DataRow {
 }
 
 export const useWashersPanel = () => {
+    const [updatedId, setUpdatedId] = useState<number>();
     const navigate = useNavigate();
+    const { user } = useContext<AuthContextType>(AuthContext);
+
+    const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);
+
     const handleReservationButtonClick = (id: number) => navigate(`/book/washer?id=${id}`);
-    
-    const menuItemsProps = (id: number) => ([
-        {
-            onClick: () => handleReservationButtonClick(id),
-            text: 'Book',
-        }
-        ]);
+
+    const handleSetWasherAvailability = async(row: DataRow) => {
+        const updatedWasher = {...row, isAvailable: !row.isAvailable};
+        await updateWasher(row.id, updatedWasher).catch(error => console.error(error));
+
+        row.id !== updatedId ? setUpdatedId(row.id) : setUpdatedId(-1);
+    };
+
+    const userMenuItemsProps = (id: number) => (
+        [
+            {
+                onClick: () => handleReservationButtonClick(id),
+                text: 'Book',
+            }
+        ]
+    );
+
+    const adminMenuItemProps = (row: DataRow) => (
+        [
+            {
+                onClick: () => handleSetWasherAvailability(row),
+                'text': row.isAvailable ? 'Mark as unavailable' : 'Mark as available'
+            }
+        ]
+    );
 
     const columns: TableColumn<DataRow>[] = [
         {
@@ -38,8 +64,8 @@ export const useWashersPanel = () => {
         {
             cell: (row) =>
                 <ButtonWithMenu
-                    menuItemsProps={menuItemsProps(row.id)}
-                    disabled={!row.isAvailable}
+                    menuItemsProps={isAdmin ? adminMenuItemProps(row) : userMenuItemsProps(row.id)}
+                    disabled={!isAdmin && !row.isAvailable}
                 />,
             button: true,
         }
@@ -47,7 +73,7 @@ export const useWashersPanel = () => {
 
     const conditionalRowStyles = [
         {
-            when: (row: DataRow) => !row.isAvailable,
+            when: (row: DataRow) => !isAdmin && !row.isAvailable,
             style: {
                 backgroundColor: '#f2f2f2',
                 color: '#888'
@@ -55,5 +81,5 @@ export const useWashersPanel = () => {
         },
     ];
 
-    return { columns, conditionalRowStyles };
+    return { columns, conditionalRowStyles, updatedId };
 };

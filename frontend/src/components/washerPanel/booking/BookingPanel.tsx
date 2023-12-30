@@ -25,8 +25,8 @@ export const BookingPanel: React.FC = () => {
     const maxDay = new Date();
     maxDay.setDate(today.getDate() + 14);
 
-    const handleBack = () => navigate('/reservations');
-    const handleCancel = () => navigate('/reservations');
+    const handleBack = () => navigate('/washers');
+    const handleCancel = () => navigate('/washers');
 
     const bookButtonDisabled = !selectedDate || !selectedTimeSlotId;
 
@@ -52,7 +52,7 @@ export const BookingPanel: React.FC = () => {
             setMessage('Success');
             setSuccess(true);
             setTimeout(() => {
-                navigate('/reservations'); // Navigate after a short delay
+                navigate('/myReservations'); // Navigate after a short delay
             }, 3000);
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -98,7 +98,6 @@ export const BookingPanel: React.FC = () => {
                 </Grid>
         );
     };
-
 
     return (
         <div id='bookingPanel' style={{ padding: '20px', width: '100%' }}>

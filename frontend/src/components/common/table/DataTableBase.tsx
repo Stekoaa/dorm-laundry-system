@@ -42,7 +42,6 @@ const paginationComponentOptions = {
 function DataTableBase<T>(props: TableProps<T>) {
     return (
         <DataTable
-            title='Washers'
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
             {...props}
