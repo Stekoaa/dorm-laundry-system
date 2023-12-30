@@ -57,10 +57,15 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
+    @DeleteMapping("/{reservationId}")
+    public ResponseEntity<?> deleteReservation(@PathVariable Long reservationId) {
+        reservationService.deleteReservation(reservationId);
+        return ResponseEntity.noContent().build();
+    }
+
     private String getAuthenticatedUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return userDetails.getUsername();
     }
-
 }

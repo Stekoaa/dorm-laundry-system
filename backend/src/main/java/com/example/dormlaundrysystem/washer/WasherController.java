@@ -1,9 +1,9 @@
 package com.example.dormlaundrysystem.washer;
 
+import com.example.dormlaundrysystem.washer.model.Washer;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,10 +17,23 @@ public class WasherController {
     }
 
     @GetMapping("/all")
-    public List<WasherDto> getAllWashers() {
-        return washerService.getAllWashers();
+    public ResponseEntity<List<WasherDto>> getAllWashers() {
+        return ResponseEntity.ok(washerService.getAllWashers());
+    }
+
+    @GetMapping("/{washerId}")
+    public ResponseEntity<WasherDto> getWasher(@PathVariable Long washerId) {
+        return ResponseEntity.ok(washerService.getWasher(washerId));
+    }
+
+    @PutMapping("/{washerId}")
+    public ResponseEntity<?> updateWasherInfo(
+            @PathVariable Long washerId,
+            @RequestBody WasherDto washer
+    ) {
+        washerService.updateWasher(washerId, washer);
+        return ResponseEntity.ok().build();
     }
 
     // TODO: Update status, adding new machine, permissions handling
-
 }

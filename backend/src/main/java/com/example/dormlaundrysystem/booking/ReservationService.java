@@ -3,6 +3,7 @@ package com.example.dormlaundrysystem.booking;
 import com.example.dormlaundrysystem.auth.UserRepository;
 import com.example.dormlaundrysystem.auth.exception.UserNotFoundException;
 import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.booking.exception.ReservationNotFoundException;
 import com.example.dormlaundrysystem.booking.exception.TimeSlotNotFoundException;
 import com.example.dormlaundrysystem.booking.model.Reservation;
 import com.example.dormlaundrysystem.booking.model.TimeSlot;
@@ -17,6 +18,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,12 +59,25 @@ public class ReservationService {
         timeSlotRepository.save(slot);
     }
 
+    public void deleteReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(ReservationNotFoundException::new);
+
+        TimeSlot timeSlot = reservation.getTimeSlot();
+        timeSlot.setAvailable(true);
+        timeSlotRepository.save(timeSlot);
+        reservationRepository.deleteById(id);
+    }
+
     public Map<LocalDate, List<TimeSlotDto>> getAvailableTimeSlotsForWasher(Long washerId, LocalDate startDate, LocalDate endDate) {
         Washer washer = washerRepository.findById(washerId).orElseThrow(WasherNotFoundException::new);
+        LocalDateTime currentDateTime = LocalDateTime.now();
         return timeSlotRepository
                 .findByDayDateBetweenAndWasher(startDate, endDate, washer)
                 .stream()
-                .filter(TimeSlot::isAvailable)
+                .filter(timeSlot ->
+                        LocalDateTime.of(timeSlot.getDay().getDate(), LocalTime.parse(timeSlot.getEndTime())).isAfter(currentDateTime)
+                )
                 .collect(Collectors.groupingBy(
                         timeSlot -> timeSlot.getDay().getDate(),
                         Collectors.toList()
@@ -76,7 +92,7 @@ public class ReservationService {
     }
 
     public List<ReservationDto> searchReservationsByUsername(String username) {
-        return reservationRepository.findByUserUsername(username)
+        return reservationRepository.findByUserUsernameOrderByIdDesc(username)
                 .stream()
                 .map(ReservationMapper::toDto)
                 .toList();
@@ -93,6 +109,6 @@ public class ReservationService {
     }
 
     private List<Reservation> getReservationsByFullName(String firstname, String surname) {
-        return reservationRepository.findByUserFirstNameAndUserSurname(firstname, surname);
+        return reservationRepository.findByUserFirstNameAndUserSurnameOrderByIdDesc(firstname, surname);
     }
 }
