@@ -3,6 +3,7 @@ import './Navbar.css';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context';
 import { ROLES } from '../../Roles';
+import {LinkButton} from "./LinkButton";
 
 export const Navbar: React.FC = () => {
     const { user, handleLogout } = useContext(AuthContext);
@@ -42,15 +43,19 @@ export const Navbar: React.FC = () => {
                 <div className='NavMenu'>
                     {links.map(([link, linkText]) => createNavLink(link, linkText))}
                     {!isAdmin && (
-                        <div className='NavBtnBook'>
-                            <button className='NavBtnLink' onClick={handleBookClick}>Book washer</button>
-                        </div>
+                        <LinkButton
+                            onClick={handleBookClick}
+                            text='Book washer'
+                            className='NavBtnBook'
+                        />
                     )
                     }
                 </div>
-                <div className='NavBtnLogout'>
-                    <button className='NavBtnLink' onClick={handleLogoutClick}>Log out</button>
-                </div>
+                <LinkButton
+                    onClick={handleLogoutClick}
+                    text='Log out'
+                    className='NavBtnLogout'
+                />
             </nav>
         </>
     );

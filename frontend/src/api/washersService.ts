@@ -12,6 +12,5 @@ export async function getWashers() {
 }
 
 export async function updateWasher(id: number, updatedWasher: WasherDto) {
-    console.log("dupa", updatedWasher);
     return apiWithCredentials.put(`/washers/${id}`, updatedWasher);
 }

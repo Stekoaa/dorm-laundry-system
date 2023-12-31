@@ -60,6 +60,7 @@ export const BookingPanel: React.FC = () => {
                     setMessage('No response from server');
                 } else if (err.response?.status === 409) {
                     setMessage('Another user has just booked this washer');
+                    fetchSlots().catch(error => console.error(error));
                 } else {
                     setMessage('Error during creating reservation');
                 }
@@ -67,12 +68,12 @@ export const BookingPanel: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchSlots = async() => {
-            const response = await getWasherAvailability(washerId, today, maxDay);
-            setSlots(response.data);
-        };
+    const fetchSlots = async() => {
+        const response = await getWasherAvailability(washerId, today, maxDay);
+        setSlots(response.data);
+    };
 
+    useEffect(() => {
         fetchSlots().catch(console.error);
     }, []);
 

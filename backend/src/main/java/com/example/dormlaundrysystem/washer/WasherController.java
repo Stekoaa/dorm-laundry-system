@@ -1,10 +1,11 @@
 package com.example.dormlaundrysystem.washer;
 
-import com.example.dormlaundrysystem.washer.model.Washer;
+import com.example.dormlaundrysystem.washer.model.dto.WasherCreateRequest;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,12 @@ public class WasherController {
     ) {
         washerService.updateWasher(washerId, washer);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> createWasher(@RequestBody WasherCreateRequest washer) {
+        washerService.createWasher(washer);
+        return ResponseEntity.created(URI.create("")).build();
     }
 
     // TODO: Update status, adding new machine, permissions handling

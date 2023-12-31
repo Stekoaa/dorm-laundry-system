@@ -25,6 +25,12 @@ public class BookingAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler(TimeSlotNotAvailableException.class)
+    protected ResponseEntity<Object> handleTimeSlotNotAvailableException(TimeSlotNotAvailableException ex, WebRequest request) {
+        Map<String, String> body = createResponseBody("Conflict", "Time slot not available");
+        return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
     private Map<String, String> createResponseBody(String error, String message) {
         return Map.of("error", error, "message", message);
     }

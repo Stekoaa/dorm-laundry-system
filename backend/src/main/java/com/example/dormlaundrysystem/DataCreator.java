@@ -9,6 +9,7 @@ import com.example.dormlaundrysystem.booking.DayRepository;
 import com.example.dormlaundrysystem.booking.TimeSlotRepository;
 import com.example.dormlaundrysystem.booking.model.Day;
 import com.example.dormlaundrysystem.booking.model.TimeSlot;
+import com.example.dormlaundrysystem.email.EmailService;
 import com.example.dormlaundrysystem.washer.WasherRepository;
 import com.example.dormlaundrysystem.washer.model.Washer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +32,19 @@ public class DataCreator implements CommandLineRunner {
     private final TimeSlotRepository timeSlotRepository;
     private final DayRepository dayRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     private final int WASHERS_NUM = 8;
 
     @Autowired
     public DataCreator(UserRepository userRepository, RoleRepository roleRepository, WasherRepository washerRepository,
-                       TimeSlotRepository timeSlotRepository, DayRepository dayRepository, PasswordEncoder passwordEncoder) {
+                       TimeSlotRepository timeSlotRepository, DayRepository dayRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.washerRepository = washerRepository;
         this.timeSlotRepository = timeSlotRepository;
         this.dayRepository = dayRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @Override
@@ -66,6 +69,7 @@ public class DataCreator implements CommandLineRunner {
                 createSlotsForWasher((long) i, startDate, endDate);
             }
         }
+        //emailService.sendMail("kuba.steczkiewicz@wp.pl", "dupa", "Hello tu Martini");
     }
 
     private void createRoles() {

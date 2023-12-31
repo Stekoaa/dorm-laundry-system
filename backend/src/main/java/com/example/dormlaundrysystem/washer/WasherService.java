@@ -2,6 +2,7 @@ package com.example.dormlaundrysystem.washer;
 
 import com.example.dormlaundrysystem.washer.exception.WasherNotFoundException;
 import com.example.dormlaundrysystem.washer.model.Washer;
+import com.example.dormlaundrysystem.washer.model.dto.WasherCreateRequest;
 import com.example.dormlaundrysystem.washer.model.mapper.WasherMapper;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
 import com.mysql.cj.log.Log;
@@ -33,7 +34,6 @@ public class WasherService {
     }
 
     public void updateWasher(Long id, WasherDto updatedWasher) {
-        log.info(updatedWasher.isAvailable() ? "true" : "false");
         washerRepository.findById(id)
                .map(washer -> {
                    washer.setAvailable(updatedWasher.isAvailable());
@@ -42,5 +42,10 @@ public class WasherService {
                    return washerRepository.save(washer);
                })
                .orElseThrow(WasherNotFoundException::new);
+    }
+
+    public void createWasher(WasherCreateRequest washer) {
+        Washer newWasher = WasherMapper.fromDto(washer);
+        washerRepository.save(newWasher);
     }
 }
