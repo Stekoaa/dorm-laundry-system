@@ -1,7 +1,7 @@
 package com.example.dormlaundrysystem.security;
 
-import com.example.dormlaundrysystem.auth.model.User;
-import com.example.dormlaundrysystem.auth.UserRepository;
+import com.example.dormlaundrysystem.user.model.User;
+import com.example.dormlaundrysystem.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

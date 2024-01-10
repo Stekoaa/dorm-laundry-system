@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import {ConditionalStyles, TableColumn} from "react-data-table-component";
 import { AxiosResponse } from "axios";
-import DataTable from "../../common/table/DataTableBase";
+import DataTable from "../common/table/DataTableBase";
 
 type FetchFunction<T> = () => Promise<AxiosResponse<T[]>>;
 type FetchRowFunction<T> = () => Promise<AxiosResponse<T>>;

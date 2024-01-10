@@ -4,7 +4,7 @@ import { AuthContext } from '../../context';
 import { submitSignin } from '../../api';
 import { AxiosError } from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthFormLabel } from './AuthFormLabel';
+import { FormLabel } from '../common/form/FormLabel';
 
 export const LoginForm: React.FC = () => {
     const { handleLogin } = useContext(AuthContext);
@@ -60,7 +60,7 @@ export const LoginForm: React.FC = () => {
 
     const renderFieldLabel = (htmlFor: string, labelText: string) => {
         return (
-            <AuthFormLabel
+            <FormLabel
                 htmlFor={htmlFor}
                 labelText={labelText}
                 showHints={false}

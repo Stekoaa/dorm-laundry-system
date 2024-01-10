@@ -1,6 +1,6 @@
 package com.example.dormlaundrysystem.booking.model.mapper;
 
-import com.example.dormlaundrysystem.auth.model.mapper.UserMapper;
+import com.example.dormlaundrysystem.user.model.mapper.UserMapper;
 import com.example.dormlaundrysystem.booking.model.Reservation;
 import com.example.dormlaundrysystem.booking.model.dto.ReservationDto;
 import com.example.dormlaundrysystem.washer.model.mapper.WasherMapper;

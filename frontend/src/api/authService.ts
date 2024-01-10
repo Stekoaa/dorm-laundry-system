@@ -21,6 +21,8 @@ export interface UserDto {
     username: string;
     firstName: string;
     surname: string;
+    email: string;
+    banned: boolean;
 }
 
 export async function submitSignup(params: SignupRequestDto) {

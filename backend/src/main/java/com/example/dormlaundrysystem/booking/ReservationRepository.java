@@ -12,4 +12,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByUserFirstNameAndUserSurnameOrderByIdDesc(String firstName, String surname);
     List<Reservation> findByUserUsernameOrderByIdDesc(String username);
     List<Reservation> findByTimeSlotDayDateAndTimeSlotStartTime(LocalDate date, String startTime);
+    List<Reservation> findAllByOrderByTimeSlotDayDateDescTimeSlotEndTimeAsc();
 }

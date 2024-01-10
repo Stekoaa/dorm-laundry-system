@@ -1,13 +1,15 @@
 package com.example.dormlaundrysystem.auth;
 
+import com.example.dormlaundrysystem.auth.exception.UserBannedException;
 import com.example.dormlaundrysystem.auth.model.Role;
 import com.example.dormlaundrysystem.auth.model.RoleType;
-import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.user.model.User;
 import com.example.dormlaundrysystem.auth.exception.UserAlreadyExistsException;
 import com.example.dormlaundrysystem.auth.model.dto.LoginRequestDto;
 import com.example.dormlaundrysystem.auth.model.dto.SignupRequestDto;
 import com.example.dormlaundrysystem.security.UserDetailsImpl;
 import com.example.dormlaundrysystem.security.jwt.JwtUtils;
+import com.example.dormlaundrysystem.user.UserRepository;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,6 +45,10 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+        if (userDetails.isBanned()) {
+            throw new UserBannedException();
+        }
+
         return jwtUtils.generateJwtCookie(userDetails);
     }
 
@@ -63,6 +69,7 @@ public class AuthService {
                 .email(signupRequest.email())
                 .password(passwordEncoder.encode(signupRequest.password()))
                 .roles(Set.of(role.get()))
+                .banned(false)
                 .build();
 
         userRepository.save(user);

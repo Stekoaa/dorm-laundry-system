@@ -12,7 +12,7 @@ interface LabelProps {
     classNameInvalid?: string;
 }
 
-export const AuthFormLabel: React.FC<LabelProps> = ({ htmlFor, labelText, iconValid, iconInvalid, classNameValid, classNameInvalid, showHints}) => {
+export const FormLabel: React.FC<LabelProps> = ({ htmlFor, labelText, iconValid, iconInvalid, classNameValid, classNameInvalid, showHints}) => {
     return (
         <label htmlFor={htmlFor}>
             {labelText}:

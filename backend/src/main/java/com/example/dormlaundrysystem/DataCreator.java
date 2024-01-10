@@ -1,10 +1,10 @@
 package com.example.dormlaundrysystem;
 
 import com.example.dormlaundrysystem.auth.RoleRepository;
-import com.example.dormlaundrysystem.auth.UserRepository;
+import com.example.dormlaundrysystem.user.UserRepository;
 import com.example.dormlaundrysystem.auth.model.Role;
 import com.example.dormlaundrysystem.auth.model.RoleType;
-import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.user.model.User;
 import com.example.dormlaundrysystem.booking.DayRepository;
 import com.example.dormlaundrysystem.booking.TimeSlotRepository;
 import com.example.dormlaundrysystem.booking.model.Day;

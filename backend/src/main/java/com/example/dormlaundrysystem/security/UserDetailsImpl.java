@@ -1,6 +1,6 @@
 package com.example.dormlaundrysystem.security;
 
-import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     private final String firstName;
     private final String surname;
     private final String email;
+    private final boolean banned;
 
     @JsonIgnore
     private String password;
@@ -28,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String firstName, String surname, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, boolean banned) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -36,6 +37,7 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.banned = banned;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -50,7 +52,9 @@ public class UserDetailsImpl implements UserDetails {
                 user.getSurname(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                user.isBanned()
+        );
     }
 
     @Override
@@ -72,6 +76,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getSurname() {
         return surname;
+    }
+
+    public boolean isBanned() {
+        return banned;
     }
 
     @Override

@@ -44,6 +44,7 @@ function DataTableBase<T>(props: TableProps<T>) {
         <DataTable
             customStyles={customStyles}
             paginationComponentOptions={paginationComponentOptions}
+            paginationPerPage={20}
             {...props}
         />
     );

@@ -1,12 +1,13 @@
-import React, {FormEvent, useEffect, useRef, useState} from 'react';
-import { InputField, useInputField } from '../input';
+import React, {FormEvent, useEffect,  useState} from 'react';
+import { useInputField } from '../input';
 import { EMAIL_REGEX, FIRST_NAME_REGEX, PWD_REGEX, SURNAME_REGEX, USERNAME_REGEX } from '../../utils';
-import { faCheck, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AuthFormLabel } from './AuthFormLabel';
+import {faCheck, faInfoCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { Form } from '../common/form/Form';
+import { FormLabel } from '../common/form/FormLabel';
 import { submitSignup } from '../../api';
 import { AxiosError } from 'axios';
-import {Link} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link} from "react-router-dom";
 
 export const RegistrationForm: React.FC = () => {
     const username = useInputField('', USERNAME_REGEX.test.bind(USERNAME_REGEX));
@@ -18,7 +19,104 @@ export const RegistrationForm: React.FC = () => {
 
     const [errMsg, setErrMsg] = useState<string>('');
     const [success, setSuccess] = useState<boolean>(false);
-    const errRef = useRef<HTMLParagraphElement>(null);
+    //const errRef = useRef<HTMLParagraphElement>(null);
+
+    const renderFieldLabel = (htmlFor: string, labelText: string, fieldValid: boolean, fieldValue: string) => {
+        return (
+            <FormLabel
+                htmlFor={htmlFor}
+                labelText={labelText}
+                iconValid={faCheck}
+                iconInvalid={faTimes}
+                classNameValid={(fieldValid && fieldValue) ? 'valid' : 'hide'}
+                classNameInvalid={(fieldValid || !fieldValue) ? 'hide' : 'invalid'}
+                showHints={true}
+            />
+        );
+    };
+
+    const fields = [
+        {
+            id: 'username',
+            label: renderFieldLabel('username', 'Username', username.valid, username.value),
+            type: 'text',
+            value: username.value,
+            valid: username.valid,
+            setFocus: (focus: boolean) => username.setFocus(focus),
+            setValue: (value: string) => username.setValue(value),
+            required: true,
+            hint: <p id='uidnote'
+                     className={username.focused && username.value && !username.valid ? 'instructions' : 'offscreen'}>
+                <FontAwesomeIcon icon={faInfoCircle}/>
+                3 to 20 characters.<br/>
+                Must begin with a letter.<br/>
+                Letters, numbers, underscores, hyphens allowed.
+            </p>
+        },
+        {
+            id: 'firstName',
+            label: renderFieldLabel('firstName', 'First name', firstName.valid, firstName.value),
+            type: 'text',
+            value: firstName.value,
+            valid: firstName.valid,
+            setFocus: (focus: boolean) => firstName.setFocus(focus),
+            setValue: (value: string) => firstName.setValue(value),
+            required: true,
+            //inputRef: firstNameRef,
+        },
+        {
+            id: 'surname',
+            label: renderFieldLabel('surname', 'Surname', surname.valid, surname.value),
+            type: 'text',
+            value: surname.value,
+            valid: surname.valid,
+            setFocus: (focus: boolean) => surname.setFocus(focus),
+            setValue: (value: string) => surname.setValue(value),
+            required: true
+        },
+        {
+            id: 'email',
+            label: renderFieldLabel('email', 'Email', email.valid, email.value),
+            type: 'text',
+            value: email.value,
+            valid: email.valid,
+            setFocus: (focus: boolean) => email.setFocus(focus),
+            setValue: (value: string) => email.setValue(value),
+            required: true
+            //inputRef: emailRef,
+        },
+        {
+            id: 'pwd',
+            label: renderFieldLabel('password', 'Password', pwd.valid, pwd.value),
+            type: 'password',
+            value: pwd.value,
+            valid: pwd.valid,
+            setFocus: (focus: boolean) => pwd.setFocus(focus),
+            setValue: (value: string) => pwd.setValue(value),
+            required: true,
+            hint: <p id='pwdnote' className={pwd.focused && !pwd.valid ? 'instructions' : 'offscreen'}>
+                <FontAwesomeIcon icon={faInfoCircle}/>
+                8 to 24 characters.<br/>
+                Must include uppercase and lowercase letters, a number and a special character.<br/>
+            </p>,
+            //inputRef: pwdRef,
+        },
+        {
+            id: 'matchPwd',
+            label: renderFieldLabel('confirm_pwd', 'Confirm password', matchPwd.valid, matchPwd.value),
+            type: 'password',
+            value: matchPwd.value,
+            valid: matchPwd.valid,
+            setFocus: (focus: boolean) => matchPwd.setFocus(focus),
+            setValue: (value: string) => matchPwd.setValue(value),
+            required: true,
+            hint: <p id='confirmnote' className={matchPwd.focused && !matchPwd.valid ? 'instructions' : 'offscreen'}>
+                <FontAwesomeIcon icon={faInfoCircle}/>
+                Must match the first password input field.
+            </p>
+            //inputRef: matchPwdRef,
+        },
+    ];
 
     const clearFields = () => {
         username.setValue('');
@@ -29,7 +127,7 @@ export const RegistrationForm: React.FC = () => {
         matchPwd.setValue('');
     };
 
-    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
@@ -66,148 +164,27 @@ export const RegistrationForm: React.FC = () => {
         setErrMsg('');
     }, [username.value, firstName.value, surname.value, email.value, pwd.value, matchPwd.value]);
 
-    const renderFieldLabel = (htmlFor: string, labelText: string, fieldValid: boolean, fieldValue: string) => {
-        return (
-            <AuthFormLabel
-                htmlFor={htmlFor}
-                labelText={labelText}
-                iconValid={faCheck}
-                iconInvalid={faTimes}
-                classNameValid={fieldValid ? 'valid' : 'hide'}
-                classNameInvalid={(fieldValid || !fieldValue) ? 'hide' : 'invalid'}
-                showHints={true}
-            />
-        );
-    };
+    const footer =
+        <p> Already registered?<br/>
+            <span className='line'>
+                <Link to='/'>Sign In</Link>
+            </span>
+        </p>;
 
-    const formInvalid = !username.valid || !firstName.valid || !surname.valid || !email.valid || !pwd.valid || !matchPwd.valid;
+    const onSuccessSection =
+        <>
+            <h1>Success!</h1>
+            <p><Link to='/login'> Sign in </Link></p>
+        </>;
 
     return (
-        <>
-            {success ? (
-                <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <Link to='/login'> Sign in </Link>
-                    </p>
-                </section>
-            ) : (
-                <section>
-                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
-                    <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
-                        {renderFieldLabel('username', 'Username', username.valid, username.value)}
-                        <InputField
-                            id='username'
-                            value={username.value}
-                            onFocus={() => username.setFocus(true)}
-                            onBlur={() => username.setFocus(false)}
-                            type='text'
-                            onChange={(e) => username.setValue(e.target.value)}
-                            required={true}
-                            ariaInvalid={username.valid}
-                            ariaDescribedBy='uidnote'
-                            ref={username.inputRef}
-                        />
-                        <p id='uidnote'
-                           className={username.focused && username.value && !username.valid ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle}/>
-                            3 to 20 characters.<br/>
-                            Must begin with a letter.<br/>
-                            Letters, numbers, underscores, hyphens allowed.
-                        </p>
-                        {renderFieldLabel('firstName', 'First name', firstName.valid, firstName.value)}
-                        <InputField
-                            id='firstName'
-                            value={firstName.value}
-                            onFocus={() => firstName.setFocus(true)}
-                            onBlur={() => firstName.setFocus(false)}
-                            type='text'
-                            onChange={(e) => firstName.setValue(e.target.value)}
-                            required={true}
-                            ariaInvalid={firstName.valid}
-                            ariaDescribedBy='uidnote'
-                            ref={firstName.inputRef}
-                        />
-                        {renderFieldLabel('surname', 'Surname', surname.valid, surname.value)}
-                        <InputField
-                            id='surname'
-                            value={surname.value}
-                            onFocus={() => surname.setFocus(true)}
-                            onBlur={() => surname.setFocus(false)}
-                            type='text'
-                            onChange={(e) => surname.setValue(e.target.value)}
-                            required={true}
-                            ariaInvalid={surname.valid}
-                            ariaDescribedBy='uidnote'
-                            ref={surname.inputRef}
-                        />
-                        {renderFieldLabel('email', 'Email', email.valid, email.value)}
-                        <InputField
-                            id='email'
-                            value={email.value}
-                            onFocus={() => email.setFocus(true)}
-                            onBlur={() => email.setFocus(false)}
-                            type='text'
-                            onChange={(e) => email.setValue(e.target.value)}
-                            required={true}
-                            ariaInvalid={email.valid}
-                            ariaDescribedBy='uidnote'
-                            ref={email.inputRef}
-                        />
-                        {renderFieldLabel('password', 'Password', pwd.valid, pwd.value)}
-                        <InputField
-                            type='password'
-                            id='password'
-                            onChange={(e) => pwd.setValue(e.target.value)}
-                            value={pwd.value}
-                            required
-                            ariaInvalid={pwd.valid}
-                            ariaDescribedBy='pwdnote'
-                            onFocus={() => pwd.setFocus(true)}
-                            onBlur={() => pwd.setFocus(false)}
-                            ref={pwd.inputRef}
-                        />
-                        <p id='pwdnote' className={pwd.focused && !pwd.valid ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle}/>
-                            8 to 24 characters.<br/>
-                            Must include uppercase and lowercase letters, a number and a special character.<br/>
-                        </p>
-
-                        <label htmlFor='confirm_pwd'>
-                            Confirm Password:
-                            <FontAwesomeIcon icon={faCheck}
-                                             className={matchPwd.valid && matchPwd.value ? 'valid' : 'hide'}/>
-                            <FontAwesomeIcon icon={faTimes}
-                                             className={matchPwd.valid || !matchPwd.value ? 'hide' : 'invalid'}/>
-                        </label>
-                        <input
-                            type='password'
-                            id='confirm_pwd'
-                            onChange={(e) => matchPwd.setValue(e.target.value)}
-                            value={matchPwd.value}
-                            required
-                            aria-invalid={matchPwd.valid ? 'false' : 'true'}
-                            aria-describedby='confirmnote'
-                            onFocus={() => matchPwd.setFocus(true)}
-                            onBlur={() => matchPwd.setFocus(false)}
-                            ref={matchPwd.inputRef}
-                        />
-                        <p id='confirmnote'
-                           className={matchPwd.focused && !matchPwd.valid ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle}/>
-                            Must match the first password input field.
-                        </p>
-                        <button disabled={formInvalid}>Sign Up</button>
-                    </form>
-                    <p>
-                        Already registered?<br/>
-                        <span className='line'>
-                            <Link to='/'>Sign In</Link>
-                        </span>
-                    </p>
-                </section>
-            )}
-        </>
+        <Form
+            fields={fields}
+            onSubmit={handleSubmit}
+            success={success}
+            errorMessage={errMsg}
+            footer={footer}
+            onSuccessSection={onSuccessSection}
+        />
     );
 };

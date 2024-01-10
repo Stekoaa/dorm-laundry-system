@@ -1,8 +1,8 @@
 package com.example.dormlaundrysystem.booking;
 
-import com.example.dormlaundrysystem.auth.UserRepository;
-import com.example.dormlaundrysystem.auth.exception.UserNotFoundException;
-import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.user.UserRepository;
+import com.example.dormlaundrysystem.user.exception.UserNotFoundException;
+import com.example.dormlaundrysystem.user.model.User;
 import com.example.dormlaundrysystem.booking.exception.ReservationNotFoundException;
 import com.example.dormlaundrysystem.booking.exception.TimeSlotNotAvailableException;
 import com.example.dormlaundrysystem.booking.exception.TimeSlotNotFoundException;
@@ -17,8 +17,6 @@ import com.example.dormlaundrysystem.washer.WasherRepository;
 import com.example.dormlaundrysystem.washer.exception.WasherNotFoundException;
 import com.example.dormlaundrysystem.washer.model.Washer;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -104,7 +102,7 @@ public class ReservationService {
                 ));
     }
 
-    @Scheduled(cron = "0 0 6,9,12,15,16,18 * * * ")
+    @Scheduled(cron = "0 0 6,9,12,15,18 * * * ")
     public void sendReminders() {
         LocalDateTime nextHourStart = LocalDateTime.now().plusHours(1).withMinute(0).withSecond(0).withNano(0);
         LocalDate date = nextHourStart.toLocalDate();
@@ -136,7 +134,7 @@ public class ReservationService {
     }
 
     private List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+        return reservationRepository.findAllByOrderByTimeSlotDayDateDescTimeSlotEndTimeAsc();
     }
 
     private List<Reservation> getReservationsByFullName(String firstname, String surname) {

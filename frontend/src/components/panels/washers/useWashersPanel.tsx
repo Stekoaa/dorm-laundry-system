@@ -1,10 +1,10 @@
 import { TableColumn } from 'react-data-table-component';
-import { ButtonWithMenu } from '../common/ButtonWithMenu';
+import { ButtonWithMenu } from '../../common/ButtonWithMenu';
 import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {AuthContext, AuthContextType} from "../../context";
-import {ROLES} from "../../Roles";
-import {updateWasher} from "../../api/washersService";
+import {AuthContext, AuthContextType} from "../../../context";
+import {ROLES} from "../../../Roles";
+import {updateWasher} from "../../../api/washersService";
 
 interface DataRow {
     id: number;
@@ -22,6 +22,8 @@ export const useWashersPanel = () => {
 
     const handleReservationButtonClick = (id: number) => navigate(`/book/washer?id=${id}`);
 
+    const handleReportDamageButtonClick = (id: number) => navigate(`/damage?washerId=${id}`);
+
     const handleSetWasherAvailability = async(row: DataRow) => {
         const updatedWasher = {...row, isAvailable: !row.isAvailable};
         await updateWasher(row.id, updatedWasher).catch(error => console.error(error));
@@ -34,6 +36,10 @@ export const useWashersPanel = () => {
             {
                 onClick: () => handleReservationButtonClick(id),
                 text: 'Book',
+            },
+            {
+                onClick: () => handleReportDamageButtonClick(id),
+                text: 'Report damage',
             }
         ]
     );

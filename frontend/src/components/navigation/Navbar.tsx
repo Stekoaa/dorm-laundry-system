@@ -23,7 +23,8 @@ export const Navbar: React.FC = () => {
     const adminLinks = [
         ['/', 'Home'],
         ['/washers', 'Washers Panel'],
-        ['/reservations', 'Reservations']
+        ['/reservations', 'Reservations'],
+        ['/damages', 'Damages']
     ];
     
     const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);

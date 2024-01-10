@@ -1,4 +1,4 @@
-package com.example.dormlaundrysystem.auth.exception;
+package com.example.dormlaundrysystem.user.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(){

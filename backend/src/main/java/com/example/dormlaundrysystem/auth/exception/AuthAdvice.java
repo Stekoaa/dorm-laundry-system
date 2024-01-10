@@ -1,5 +1,6 @@
 package com.example.dormlaundrysystem.auth.exception;
 
+import com.example.dormlaundrysystem.user.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ public class AuthAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
         Map<String, String> body = createResponseBody("Not found", "User not found");
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(UserBannedException.class)
+    protected ResponseEntity<Object> handleBannedUserException(UserBannedException ex, WebRequest request) {
+        Map<String, String> body = createResponseBody("Forbidden", "User banned");
+        return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
     private Map<String, String> createResponseBody(String error, String message) {

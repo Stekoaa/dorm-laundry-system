@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWashersPanel } from "./useWashersPanel";
-import { Panel } from "./booking/Panel";
-import { getWashers, WasherDto } from "../../api";
+import { Panel } from "../Panel";
+import { getWashers, WasherDto } from "../../../api";
 
 export const WashersPanel: React.FC = () => {
     const {columns, conditionalRowStyles, updatedId } = useWashersPanel();

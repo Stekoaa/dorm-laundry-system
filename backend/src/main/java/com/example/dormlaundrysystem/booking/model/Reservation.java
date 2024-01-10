@@ -1,6 +1,6 @@
 package com.example.dormlaundrysystem.booking.model;
 
-import com.example.dormlaundrysystem.auth.model.User;
+import com.example.dormlaundrysystem.user.model.User;
 import com.example.dormlaundrysystem.washer.model.Washer;
 import jakarta.persistence.*;
 

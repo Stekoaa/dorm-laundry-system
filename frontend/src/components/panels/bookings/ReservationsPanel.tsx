@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext, AuthContextType } from "../../../context";
 import { useReservationsPanel } from "./useReservationsPanel";
 import { ROLES } from "../../../Roles";
-import { Panel } from "./Panel";
+import { Panel } from "../Panel";
 
 export const ReservationsPanel: React.FC = () => {
     const { user } = useContext<AuthContextType>(AuthContext);
