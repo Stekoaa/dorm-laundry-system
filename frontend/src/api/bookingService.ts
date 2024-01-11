@@ -1,5 +1,5 @@
 import { apiWithCredentials } from './axios';
-import { UserDto } from "./authService";
+import { UserDto } from "./usersService";
 import {WasherDto} from "./washersService";
 
 interface TimeSlotDto {

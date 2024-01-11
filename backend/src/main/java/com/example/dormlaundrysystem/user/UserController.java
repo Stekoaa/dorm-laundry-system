@@ -21,21 +21,21 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/{username}/ban")
-    public ResponseEntity<?> banUser(@PathVariable String username) {
-        userService.banUser(username);
+    @PutMapping("/{userId}/ban")
+    public ResponseEntity<?> banUser(@PathVariable Long userId) {
+        userService.banUser(userId);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{username}/unban")
-    public ResponseEntity<?> unbanUser(@PathVariable String username) {
-        userService.unbanUser(username);
+    @PutMapping("/{userId}/unban")
+    public ResponseEntity<?> unbanUser(@PathVariable Long userId) {
+        userService.unbanUser(userId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{username}")
-    public ResponseEntity<?> deleteUser(@PathVariable String username) {
-        userService.deleteUser(username);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
 }

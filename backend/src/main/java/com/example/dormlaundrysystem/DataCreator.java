@@ -61,7 +61,8 @@ public class DataCreator implements CommandLineRunner {
             createWashers();
         }
 
-        if (dayRepository.findAll().isEmpty()) {
+        List<Day> days = dayRepository.findAll();
+        if (days.isEmpty() || days.get(days.size() - 1).getDate().isBefore(LocalDate.now())) {
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = startDate.plusDays(14);
 
@@ -69,7 +70,6 @@ public class DataCreator implements CommandLineRunner {
                 createSlotsForWasher((long) i, startDate, endDate);
             }
         }
-        //emailService.sendMail("kuba.steczkiewicz@wp.pl", "dupa", "Hello tu Martini");
     }
 
     private void createRoles() {

@@ -27,7 +27,7 @@ export const useDamagePanel = () => {
     const menuItemsProps = (row: DamageRow) => [
         {
             onClick: () => handleFixedChange(row),
-            text: 'Mark as fixed',
+            text: row.fixed ? 'Mark as unfixed' : 'Mark as fixed',
         },
     ];
 

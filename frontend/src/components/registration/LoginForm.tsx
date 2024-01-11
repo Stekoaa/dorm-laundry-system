@@ -38,6 +38,8 @@ export const LoginForm: React.FC = () => {
                     setErrMsg('Missing username or password');
                 } else if (err.response?.status === 401) {
                     setErrMsg('Unauthorized');
+                } else if (err.response?.status === 403) {
+                    setErrMsg('Forbidden');
                 }
             } else {
                 setErrMsg('Login failed');

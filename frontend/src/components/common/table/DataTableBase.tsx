@@ -32,7 +32,13 @@ const customStyles = {
         style: {
             width: '100vw'
         }
+    },
+    table: {
+        style: {
+            height: '100vw'
+        }
     }
+
 };
 
 const paginationComponentOptions = {

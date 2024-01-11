@@ -1,5 +1,6 @@
 package com.example.dormlaundrysystem.security;
 
+import com.example.dormlaundrysystem.auth.exception.UserBannedException;
 import com.example.dormlaundrysystem.user.model.User;
 import com.example.dormlaundrysystem.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found"));
+
+        if (user.isBanned()) {
+            throw new UserBannedException();
+        }
+        
         return UserDetailsImpl.build(user);
     }
 }

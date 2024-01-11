@@ -24,7 +24,8 @@ export const Navbar: React.FC = () => {
         ['/', 'Home'],
         ['/washers', 'Washers Panel'],
         ['/reservations', 'Reservations'],
-        ['/damages', 'Damages']
+        ['/damages', 'Damages'],
+        ['/users', 'Users']
     ];
     
     const isAdmin = user?.roles.map(role => role.authority).includes(ROLES.ADMIN);

@@ -17,27 +17,27 @@ public class UserService {
     }
 
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream().map(UserMapper::toDto).toList();
+        return userRepository.findAllByOrderByUsername().stream().map(UserMapper::toDto).toList();
     }
 
-    public void banUser(String username) {
-        User user = userRepository.findByUsername(username)
+    public void banUser(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
         user.setBanned(true);
         userRepository.save(user);
     }
 
-    public void unbanUser(String username) {
-        User user = userRepository.findByUsername(username)
+    public void unbanUser(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
         user.setBanned(false);
         userRepository.save(user);
     }
 
-    public void deleteUser(String username) {
-        User user = userRepository.findByUsername(username)
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
     }

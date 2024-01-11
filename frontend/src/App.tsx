@@ -16,6 +16,7 @@ import { ROLES } from './Roles';
 import {ReservationsPanel} from "./components/panels/bookings/ReservationsPanel";
 import {DamageReportForm} from "./components/panels/damages/DamageReportForm";
 import {DamagePanel} from "./components/panels/damages/DamagePanel";
+import { UsersPanel } from './components/panels/users/UsersPanel';
 
 const App = () => {
     return (
@@ -34,6 +35,7 @@ const App = () => {
                 <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]}/>}>
                     <Route path='reservations' element={<ReservationsPanel/>}/>
                     <Route path='damages' element={<DamagePanel/>}></Route>
+                    <Route path='users' element={<UsersPanel/>}></Route>
                 </Route>
 
                 <Route element={<RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]}/>}>

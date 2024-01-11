@@ -18,13 +18,13 @@ export interface DamageDto {
 
 export async function reportDamage(damageReport: DamageReportDto) {
     return apiWithCredentials.post(
-        '/damages/all',
+        '/damages',
         damageReport,
     );
 }
 
 export async function getAllDamages() {
-    return apiWithCredentials.get<DamageDto[]>("/damages");
+    return apiWithCredentials.get<DamageDto[]>("/damages/all");
 }
 
 export async function updateDamage(id: number, damage: DamageDto) {
