@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: laundry-database
+    build: ./db
+    image: laundry-db
+    environment:
+      SA_PASSWORD: Root@2021
+      ACCEPT_EULA: "Y"
+    ports:
+      - "14333:1433"
+#    secrets:
+#      - db_root_password
+
+    volumes:
+      - "./data:/var/opt/mssql/data"
+      - "./log:/var/opt/mssql/log"
+      - "./secrets:/var/opt/mssql/secrets"
+
+  laundry-backend:
+    container_name: laundry-backend
+    build: ./backend
+    image: laundry-backend
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_USERNAME: sa
+      MYSQL_PASSWORD: Root@2021
+      MYSQL_DB: laundry
+      EMAIL_PASSWORD: njrwbaejhwnszdxi
+      EMAIL_USERNAME: washers.zaczek@gmail.com
+      JWT_SECRET: yyeyt+Wn4MdAjUuL4VGODY+ueKKmIEhgJN3HtM2MRMhkuaEA5G/BkId0wIEb5T4f FJe4dib7nQhmPoMC
+      DB_HOST: laundry-database
+      DB_PORT: 1433
+    links:
+      - db
+    depends_on:
+      - db
+#    secrets:
+#      - db_root_password
+#      - email_password
+#      - jwt_secret
+
+  laundry-frontend:
+    container_name: laundry-frontend
+    build: ./frontend
+    image: laundry-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL="http://127.0.0.1:8080"
+    links:
+      - laundry-backend
+
+#secrets:
+#  db_root_password:
+#    external: true
+#  email_password:
+#    external: true
+#  jwt_secret:
+#    external: true
