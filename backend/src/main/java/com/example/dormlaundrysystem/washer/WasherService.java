@@ -5,13 +5,11 @@ import com.example.dormlaundrysystem.washer.model.Washer;
 import com.example.dormlaundrysystem.washer.model.dto.WasherCreateRequest;
 import com.example.dormlaundrysystem.washer.model.mapper.WasherMapper;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
-import com.mysql.cj.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

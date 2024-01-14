@@ -5,6 +5,7 @@ import com.example.dormlaundrysystem.damage.model.dto.DamageReportDto;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,6 +21,7 @@ public class DamageController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DamageDto>> getAllDamages() {
         return ResponseEntity.ok(damageService.getAllDamages());
     }
@@ -31,6 +33,7 @@ public class DamageController {
     }
 
     @PutMapping("/{damageId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateDamageInfo(
             @PathVariable Long damageId,
             @RequestBody DamageDto damage

@@ -5,6 +5,7 @@ import com.example.dormlaundrysystem.booking.model.dto.TimeSlotDto;
 import com.example.dormlaundrysystem.security.UserDetailsImpl;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class ReservationController {
     }
 
     @PostMapping("/book")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> bookWasher(
             @RequestParam long slotId,
             @RequestParam long washerId
@@ -33,6 +35,7 @@ public class ReservationController {
     }
 
     @GetMapping("/availableTimeSlots")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Map<LocalDate, List<TimeSlotDto>>> getAvailableTimeSlots(
             @RequestParam Long washerId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -43,6 +46,7 @@ public class ReservationController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ReservationDto>> getAllReservations(
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "surname", required = false) String surname
@@ -52,12 +56,14 @@ public class ReservationController {
     }
 
     @GetMapping("/myReservations")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<ReservationDto>> getUserReservations() {
         List<ReservationDto> reservations = reservationService.searchReservationsByUsername(getAuthenticatedUsername());
         return ResponseEntity.ok(reservations);
     }
 
     @DeleteMapping("/{reservationId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteReservation(@PathVariable Long reservationId) {
         reservationService.deleteReservation(reservationId);
         return ResponseEntity.noContent().build();

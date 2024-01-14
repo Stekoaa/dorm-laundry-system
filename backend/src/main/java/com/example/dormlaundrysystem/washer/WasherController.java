@@ -3,6 +3,7 @@ package com.example.dormlaundrysystem.washer;
 import com.example.dormlaundrysystem.washer.model.dto.WasherCreateRequest;
 import com.example.dormlaundrysystem.washer.model.dto.WasherDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class WasherController {
     }
 
     @PutMapping("/{washerId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateWasherInfo(
             @PathVariable Long washerId,
             @RequestBody WasherDto washer
@@ -37,10 +39,9 @@ public class WasherController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createWasher(@RequestBody WasherCreateRequest washer) {
         washerService.createWasher(washer);
         return ResponseEntity.created(URI.create("")).build();
     }
-
-    // TODO: Update status, adding new machine, permissions handling
 }
