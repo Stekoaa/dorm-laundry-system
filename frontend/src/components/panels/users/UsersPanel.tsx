@@ -10,7 +10,7 @@ export const UsersPanel: React.FC = () => {
         <Panel
             fetchFunction={fetchFunction}
             columns={columns}
-            title='Reservations'
+            title='Users'
             dataConverter={dataConverter}
             pagination={true}
             filterFunction={filterFunction}

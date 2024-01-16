@@ -1,6 +1,7 @@
 package com.example.dormlaundrysystem.booking.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Day {
     private Long id;
     private LocalDate date;
 
-    @OneToMany(mappedBy = "day")
+    @OneToMany(mappedBy = "day", fetch = FetchType.LAZY)
     private List<TimeSlot> slots;
 
     public Day() {
