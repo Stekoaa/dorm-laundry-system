@@ -110,8 +110,7 @@ export const useUsersPanel = () => {
     };
 
     const fetchFunction = getAllUsers;
-    const dataConverter = (items: UserDto[]) => items;
-
+    const dataConverter = (items: UserDto[]) => items.filter(item => item.username !== 'admin');
 
     return { columns, fetchFunction, dataConverter, filterFunction, filterComponent, idDeleted, idUpdated };
 };

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface DamageRepository extends JpaRepository<Damage, Long> {
     List<Damage> findAllByOrderByReportTimeDesc();
+    List<Damage> findAllByUserId(Long userId);
 }

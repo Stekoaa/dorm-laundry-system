@@ -1,5 +1,6 @@
 package com.example.dormlaundrysystem.damage;
 
+import com.example.dormlaundrysystem.damage.exception.DamageNotFoundException;
 import com.example.dormlaundrysystem.user.UserRepository;
 import com.example.dormlaundrysystem.user.exception.UserNotFoundException;
 import com.example.dormlaundrysystem.user.model.User;
@@ -43,6 +44,11 @@ public class DamageService {
                 .orElseThrow(WasherNotFoundException::new);
         damage.setFixed(updatedDamage.fixed());
         damageRepository.save(damage);
+    }
+
+    public void deleteDamage(Long id) {
+        Damage damage = damageRepository.findById(id).orElseThrow(DamageNotFoundException::new);
+        damageRepository.delete(damage);
     }
 
     public void createDamage(DamageReportDto damageReport) {
